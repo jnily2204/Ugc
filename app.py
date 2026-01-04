@@ -2,170 +2,211 @@ import streamlit as st
 
 # --- CẤU HÌNH GIAO DIỆN ---
 st.set_page_config(
-    page_title="Veo 3.1 UGC Pro: Posing Master",
-    page_icon="💃",
+    page_title="Veo 3.1 Director Mode",
+    page_icon="🎬",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# CSS tùy chỉnh
+# CSS tùy chỉnh giao diện
 st.markdown("""
 <style>
     div.stButton > button:first-child {
-        background-color: #000000;
+        background-color: #2c3e50;
         color: white;
-        font-size: 20px;
+        font-size: 22px;
         font-weight: bold;
-        border-radius: 12px;
-        padding: 12px 24px;
+        padding: 15px 30px;
+        border-radius: 8px;
         width: 100%;
+        border: 1px solid #34495e;
     }
-    .sub-header {
+    .section-title {
         font-size: 18px;
-        font-weight: bold;
-        color: #333;
-        margin-top: 10px;
-        margin-bottom: 5px;
-        border-bottom: 2px solid #ddd;
-        padding-bottom: 5px;
+        font-weight: 700;
+        color: #e67e22; /* Màu cam nổi bật */
+        margin-top: 20px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        border-bottom: 1px solid #ddd;
+    }
+    .tooltip {
+        font-size: 12px;
+        color: #7f8c8d;
     }
 </style>
 """, unsafe_allow_html=True)
 
-st.title("💃 Veo 3.1: Fashion Posing & Product Showcase")
-st.markdown("Chuyên sâu về các hành động **tạo dáng (Posing)** và **tương tác sản phẩm**.")
+st.title("🎬 Veo 3.1: Fashion Director Mode")
+st.markdown("Chế độ đạo diễn: Kiểm soát chi tiết **Góc Quay** và **Phối Hợp Dáng (Mix & Match)**.")
 st.markdown("---")
 
-# --- SIDEBAR: CẤU HÌNH CHUNG ---
+# --- SIDEBAR ---
 with st.sidebar:
-    st.header("⚙️ Cấu hình Video")
-    video_ratio = st.radio("Tỷ lệ khung hình", ["9:16 (TikTok/Reels)", "16:9 (Youtube)", "1:1 (Insta)"])
+    st.header("⚙️ Thông số kỹ thuật")
+    video_ratio = st.selectbox("Tỷ lệ khung hình", ["9:16 (TikTok/Reels)", "16:9 (Youtube Cinematic)", "4:3 (Classic Film)", "1:1 (Square)"])
+    duration = st.slider("Thời lượng video (giây)", 5, 60, 10)
+    
     st.divider()
-    st.info("💡 **Tips:** Để video bán hàng tốt, hãy kết hợp 'Hành động toàn thân' với 'Tương tác tay' (ví dụ: Vừa đi vừa chỉnh túi xách).")
+    st.markdown("### 💡 Mẹo góc máy")
+    st.info("""
+    - **Low Angle:** Hack dáng, chân dài, quyền lực.
+    - **High Angle:** Dễ thương, mắt to, art.
+    - **Dutch Angle:** Nghiêng máy, tạo cảm giác năng động/phá cách.
+    """)
 
-# --- CỘT 1: INPUT CƠ BẢN (MẪU & ĐỒ) ---
-col1, col2 = st.columns([1, 1], gap="large")
+# --- CỘT 1: NỘI DUNG CỐT LÕI ---
+col1, col2 = st.columns([1, 1.2], gap="large")
 
 with col1:
-    st.markdown('<div class="sub-header">1. Mẫu & Sản phẩm</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">1. Diễn viên & Trang phục</div>', unsafe_allow_html=True)
     
-    # Upload ảnh (Giữ nguyên từ bản trước vì rất hữu ích)
-    uploaded_img = st.file_uploader("Upload ảnh tham khảo (Optional)", type=['png', 'jpg'])
+    # Upload giữ nguyên vì rất quan trọng
+    uploaded_img = st.file_uploader("Ảnh tham khảo (Visual Reference)", type=['jpg', 'png'])
     if uploaded_img:
         st.image(uploaded_img, width=200)
 
-    model_desc = st.text_input("Mô tả Mẫu", "Asian female model, street style look, bob hair")
-    outfit_desc = st.text_area("Mô tả Trang phục", "White silk dress, flowy fabric, pearl buttons", height=80)
-    
-    st.markdown('<div class="sub-header">2. Bối cảnh & Ánh sáng</div>', unsafe_allow_html=True)
-    setting = st.selectbox("Địa điểm", [
-        "Đường phố (Street/Urban)", "Studio phông trơn (Minimalist)", 
-        "Quán Cafe (Lifestyle)", "Công viên/Bãi cỏ (Nature)", "Phòng ngủ (Indoor/Cozy)"
-    ])
-    lighting = st.selectbox("Ánh sáng", [
-        "Nắng tự nhiên (Natural Sunlight)", "Nắng giờ vàng (Golden Hour)", 
-        "Ánh sáng cửa sổ (Soft Window Light)", "Đèn Flash (Flash Photography)"
-    ])
+    model_desc = st.text_area("Mô tả người mẫu (Model)", 
+                              "A cool Gen-Z fashion model, platinum blonde bob hair, sharp eyeliner", height=70)
+    outfit_desc = st.text_area("Mô tả trang phục (Outfit)", 
+                               "Oversized leather jacket, baggy denim jeans, silver chunky necklace", height=70)
 
-# --- CỘT 2: HÀNH ĐỘNG CHUYÊN SÂU (MỚI) ---
+    st.markdown('<div class="section-title">2. Bối cảnh (Setting)</div>', unsafe_allow_html=True)
+    setting_type = st.selectbox("Loại bối cảnh", [
+        "Urban/Street (Đường phố)", 
+        "Nature/Beach (Thiên nhiên)", 
+        "Studio/Abstract (Trong nhà)", 
+        "Luxury/Night (Sang trọng)"
+    ])
+    
+    custom_setting = st.text_input("Chi tiết bối cảnh", "Busy Shibuya crossing at night with neon signs")
+
+# --- CỘT 2: ĐẠO DIỄN HÌNH ẢNH (NÂNG CẤP MẠNH) ---
 with col2:
-    st.markdown('<div class="sub-header">3. Chọn Hành động (Posing)</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title">3. Góc Quay Điện Ảnh (Camera Angles)</div>', unsafe_allow_html=True)
     
-    # Chia hành động thành 3 Tab để dễ chọn
-    tab_body, tab_interact, tab_detail = st.tabs(["💃 Toàn thân", "🤚 Tương tác/Vải", "👜 Phụ kiện/Giày"])
+    # Dictionary chứa góc quay và định nghĩa prompt
+    cam_options = {
+        "🎥 Eye Level (Ngang tầm mắt)": "eye-level shot, neutral perspective, documentary style",
+        "🐛 Low Angle (Hất từ dưới - Hack chân)": "low angle shot looking up, worm's-eye view, making subject look tall and powerful, elongating legs",
+        "🦅 High Angle (Góc cao - Drone/CCTV)": "high angle shot looking down, drone view, fashion editorial perspective",
+        "🤪 Dutch Angle (Nghiêng máy - Cá tính)": "Dutch angle, tilted camera horizon, dynamic and edgy composition",
+        "🔍 Close-up Detail (Cận chất liệu/Mặt)": "extreme close-up macro shot, focus on fabric texture and skin details, shallow depth of field",
+        "🏃 Tracking Shot (Camera chạy theo mẫu)": "tracking shot moving backwards as model walks forward, smooth gimbal movement",
+        "🔄 360 Orbit (Xoay vòng quanh mẫu)": "360-degree orbit camera movement circling around the subject, bullet time effect",
+        "🤳 Selfie/POV (Góc nhìn thứ nhất)": "handheld selfie camera angle, POV shot looking down at outfit, authentic vlogger style"
+    }
     
-    with tab_body:
-        st.caption("Dùng cho video Lookbook, Outfit check")
-        body_action = st.radio("Chọn dáng chính:", [
-            "Đi thẳng về phía camera (Catwalk)",
-            "Xoay vòng 360 độ (Twirl - Khoe váy xòe)",
-            "Đứng tựa tường/lan can (Pose tĩnh)",
-            "Ngồi cafe/đọc sách (Lifestyle)",
-            "Chạy nhảy vui vẻ (Dynamic/Vui tươi)"
-        ], index=0)
+    camera_select = st.selectbox("Chọn góc máy chủ đạo:", list(cam_options.keys()))
     
-    with tab_interact:
-        st.caption("Dùng để mô tả chất lượng sản phẩm")
-        hand_action = st.radio("Chọn tương tác tay:", [
-            "Không có (None)",
-            "Tay vuốt dọc thân áo (Khoe phom dáng)",
-            "Cầm vạt váy tung nhẹ (Khoe độ bay)",
-            "Chỉnh cổ áo/Cài cúc (Chi tiết may)",
-            "Đút tay túi quần (Cool ngầu)",
-            "Vuốt tóc/Vén tóc (Tự nhiên)"
-        ], index=0)
+    st.markdown('<div class="section-title">4. Phối Hợp Dáng (Pose Mix & Match)</div>', unsafe_allow_html=True)
+    st.caption("Ghép 3 yếu tố để tạo ra hàng trăm kiểu dáng độc nhất.")
+    
+    c1, c2, c3 = st.columns(3)
+    
+    with c1:
+        st.markdown("**A. Thân (Body)**")
+        body_pose = st.selectbox("Dáng người:", [
+            "Đi catwalk (Walking)",
+            "Chạy đùa (Running)",
+            "Xoay váy (Spinning)",
+            "Đứng tựa tường (Leaning)",
+            "Ngồi ghế cao (Sitting Stool)",
+            "Ngồi bệt (Sitting Floor)",
+            "Nhảy múa (Dancing)",
+            "Đứng yên gió thổi (Static)"
+        ])
         
-    with tab_detail:
-        st.caption("Dùng cho bán Giày, Túi, Trang sức")
-        acc_action = st.radio("Chọn góc quay phụ kiện:", [
-            "Không có (None)",
-            "Cận cảnh túi xách trên tay",
-            "Góc thấp quay bước chân/Giày (Low angle)",
-            "Zoom vào trang sức (Khuyên tai/Vòng cổ)",
-            "Mở túi/lấy đồ (Unboxing vibe)"
-        ], index=0)
+    with c2:
+        st.markdown("**B. Tay (Hands)**")
+        hand_pose = st.selectbox("Tương tác tay:", [
+            "Thả lỏng (Relaxed)",
+            "Vuốt tóc (Touching hair)",
+            "Đút túi (Hands in pocket)",
+            "Chỉnh kính/Mũ (Adjusting acc)",
+            "Cầm túi xách (Holding bag)",
+            "Che nắng (Shielding eyes)",
+            "Khoanh tay (Crossed arms)",
+            "Cầm điện thoại (Holding phone)"
+        ])
+        
+    with c3:
+        st.markdown("**C. Mặt (Face)**")
+        face_pose = st.selectbox("Thần thái:", [
+            "Nhìn thẳng Cam (Eye contact)",
+            "Nhìn xa xăm (Looking away)",
+            "Cười rạng rỡ (Laughing)",
+            "Nháy mắt (Winking)",
+            "Lạnh lùng (Poker face)",
+            "Quay đầu lại (Looking back)"
+        ])
 
-    st.markdown('<div class="sub-header">4. Cảm xúc (Vibe)</div>', unsafe_allow_html=True)
-    vibe = st.select_slider("Thần thái của mẫu", options=["Lạnh lùng/Cool", "Tự tin/Confident", "Vui vẻ/Smiling", "Mơ màng/Dreamy"])
-
-# --- XỬ LÝ LOGIC TẠO PROMPT ---
+# --- XỬ LÝ PROMPT ---
 st.markdown("---")
-if st.button("🚀 TẠO PROMPT CHI TIẾT"):
-    # 1. Map hành động sang tiếng Anh chuẩn Veo
-    action_map = {
-        "Đi thẳng về phía camera (Catwalk)": "walking confidently towards the camera, runway walk style",
-        "Xoay vòng 360 độ (Twirl - Khoe váy xòe)": "doing a slow 360 degree spin to show the flow of the dress",
-        "Đứng tựa tường/lan can (Pose tĩnh)": "leaning casually against a wall, posing for a photo",
-        "Ngồi cafe/đọc sách (Lifestyle)": "sitting relaxed at a cafe table, drinking coffee",
-        "Chạy nhảy vui vẻ (Dynamic/Vui tươi)": "running playfully, laughing, dynamic movement"
+if st.button("🎬 ACTION! TẠO PROMPT"):
+    # 1. Map dữ liệu
+    # Map Body
+    body_map = {
+        "Đi catwalk (Walking)": "walking confidently like a runway model",
+        "Chạy đùa (Running)": "running playfully towards camera",
+        "Xoay váy (Spinning)": "twirling around to show the dress movement",
+        "Đứng tựa tường (Leaning)": "leaning coolly against a wall",
+        "Ngồi ghế cao (Sitting Stool)": "sitting elegantly on a high stool",
+        "Ngồi bệt (Sitting Floor)": "sitting on the ground, legs crossed casually",
+        "Nhảy múa (Dancing)": "dancing freely to music",
+        "Đứng yên gió thổi (Static)": "standing still power pose, wind blowing clothes"
     }
     
+    # Map Hands
     hand_map = {
-        "Không có (None)": "",
-        "Tay vuốt dọc thân áo (Khoe phom dáng)": "hands running down the fabric to show texture",
-        "Cầm vạt váy tung nhẹ (Khoe độ bay)": "holding the skirt hem and playing with the fabric",
-        "Chỉnh cổ áo/Cài cúc (Chi tiết may)": "adjusting the collar, fixing the buttons",
-        "Đút tay túi quần (Cool ngầu)": "hands in pockets, cool attitude",
-        "Vuốt tóc/Vén tóc (Tự nhiên)": "tucking hair behind ear, fixing hairstyle"
-    }
-
-    acc_map = {
-        "Không có (None)": "",
-        "Cận cảnh túi xách trên tay": "focus on the handbag held in hand",
-        "Góc thấp quay bước chân/Giày (Low angle)": "low angle shot focusing on shoes walking on pavement",
-        "Zoom vào trang sức (Khuyên tai/Vòng cổ)": "extreme close-up on the earrings and necklace",
-        "Mở túi/lấy đồ (Unboxing vibe)": "hands opening the bag, interacting with accessories"
+        "Thả lỏng (Relaxed)": "arms relaxed by sides",
+        "Vuốt tóc (Touching hair)": "one hand running through hair",
+        "Đút túi (Hands in pocket)": "hands casually in pockets",
+        "Chỉnh kính/Mũ (Adjusting acc)": "adjusting sunglasses or hat",
+        "Cầm túi xách (Holding bag)": "holding a luxury handbag",
+        "Che nắng (Shielding eyes)": "hand shielding eyes from the sun",
+        "Khoanh tay (Crossed arms)": "arms crossed over chest",
+        "Cầm điện thoại (Holding phone)": "holding a smartphone taking a selfie"
     }
     
-    lighting_map = {
-        "Nắng tự nhiên (Natural Sunlight)": "natural daylight, bright",
-        "Nắng giờ vàng (Golden Hour)": "golden hour warm sunlight, lens flare",
-        "Ánh sáng cửa sổ (Soft Window Light)": "soft window lighting, diffused",
-        "Đèn Flash (Flash Photography)": "direct camera flash, night aesthetic"
+    # Map Face
+    face_map = {
+        "Nhìn thẳng Cam (Eye contact)": "intense eye contact with the camera",
+        "Nhìn xa xăm (Looking away)": "looking away thoughtfully into the distance",
+        "Cười rạng rỡ (Laughing)": "laughing naturally with a bright smile",
+        "Nháy mắt (Winking)": "winking playfully at the viewer",
+        "Lạnh lùng (Poker face)": "serious, high-fashion cold expression",
+        "Quay đầu lại (Looking back)": "looking back over the shoulder"
     }
 
-    # 2. Xây dựng chuỗi hành động kết hợp
-    # Logic: Nếu có action phụ kiện -> Ưu tiên mô tả phụ kiện. Nếu không -> Mô tả dáng + tay.
-    combined_action = f"{action_map[body_action]}"
-    if hand_action != "Không có (None)":
-        combined_action += f", while {hand_map[hand_action]}"
-    if acc_action != "Không có (None)":
-        combined_action += f", camera emphasizes {acc_map[acc_action]}"
+    # 2. Xử lý kỹ thuật
+    ar_code = "--ar 9:16"
+    if "16:9" in video_ratio: ar_code = "--ar 16:9"
+    elif "4:3" in video_ratio: ar_code = "--ar 4:3"
+    elif "1:1" in video_ratio: ar_code = "--ar 1:1"
 
-    # 3. Tạo Prompt
-    ar = "--ar 9:16" if "9:16" in video_ratio else "--ar 16:9"
-    if "1:1" in video_ratio: ar = "--ar 1:1"
+    cam_prompt = cam_options[camera_select]
+    
+    # 3. Ghép chuỗi hành động (Quan trọng)
+    # Cấu trúc: [Subject] is [Body Action] while [Hand Action], [Face Action].
+    action_sequence = f"{body_map[body_pose]} while {hand_map[hand_pose]}, {face_map[face_pose]}"
 
+    # 4. Final Prompt
     final_prompt = (
-        f"**Veo Prompt:**\n\n"
-        f"Realistic UGC fashion video, shot on iPhone. "
+        f"**Veo 3.1 Prompt:**\n\n"
+        f"High quality fashion video. "
+        f"**Shot type:** {cam_prompt}. \n"
         f"**Subject:** {model_desc} wearing {outfit_desc}. \n"
-        f"**Action:** {combined_action}. \n"
-        f"**Vibe:** {vibe} expression. \n"
-        f"**Environment:** {setting}, {lighting_map[lighting]}. \n"
-        f"**Details:** Real life texture, cloth physics, authentic look, 4k footage. {ar}"
+        f"**Action:** {action_sequence}. \n"
+        f"**Setting:** {custom_setting}. \n"
+        f"**Details:** 4k, photorealistic, cinematic lighting, cloth physics simulation. {ar_code}"
     )
-
-    st.success("Đã tạo prompt với hành động chi tiết!")
+    
+    st.success("✅ Đã tạo xong kịch bản quay!")
     st.code(final_prompt, language="markdown")
-    st.caption("Copy và dán vào Veo. Lưu ý: Các hành động như 'Sờ vải' hay 'Xoay' sẽ giúp AI tạo ra chuyển động vật lý rất đẹp.")
+    
+    # Gợi ý phân tích prompt
+    with st.expander("🔍 Giải thích cấu trúc Prompt này"):
+        st.write(f"- **Góc máy:** {camera_select} (Giúp AI định hình không gian)")
+        st.write(f"- **Hành động kép:** {body_pose} + {hand_pose} (Tạo sự tự nhiên)")
+        st.write(f"- **Thần thái:** {face_pose} (Tạo cảm xúc kết nối)")
