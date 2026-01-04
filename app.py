@@ -2,124 +2,170 @@ import streamlit as st
 
 # --- CẤU HÌNH GIAO DIỆN ---
 st.set_page_config(
-    page_title="Veo 3.1 UGC Master",
-    page_icon="📱",
+    page_title="Veo 3.1 UGC Pro: Posing Master",
+    page_icon="💃",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# CSS làm đẹp giao diện
+# CSS tùy chỉnh
 st.markdown("""
 <style>
     div.stButton > button:first-child {
-        background-color: #007AFF; /* Màu xanh iPhone */
+        background-color: #000000;
         color: white;
         font-size: 20px;
         font-weight: bold;
         border-radius: 12px;
         padding: 12px 24px;
+        width: 100%;
     }
-    .sub-label {
+    .sub-header {
+        font-size: 18px;
         font-weight: bold;
         color: #333;
-        margin-top: 15px;
+        margin-top: 10px;
         margin-bottom: 5px;
-    }
-    .highlight {
-        color: #007AFF;
-        font-weight: bold;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 5px;
     }
 </style>
 """, unsafe_allow_html=True)
 
-st.title("📱 Veo 3.1: Authentic UGC & Natural Light Generator")
-st.markdown("Tạo prompt video phong cách **quay bằng điện thoại (iPhone)**, ánh sáng tự nhiên, chân thực nhất.")
+st.title("💃 Veo 3.1: Fashion Posing & Product Showcase")
+st.markdown("Chuyên sâu về các hành động **tạo dáng (Posing)** và **tương tác sản phẩm**.")
 st.markdown("---")
 
-# --- SIDEBAR ---
+# --- SIDEBAR: CẤU HÌNH CHUNG ---
 with st.sidebar:
     st.header("⚙️ Cấu hình Video")
     video_ratio = st.radio("Tỷ lệ khung hình", ["9:16 (TikTok/Reels)", "16:9 (Youtube)", "1:1 (Insta)"])
-    
     st.divider()
-    st.info("💡 **Mẹo ánh sáng:** Để video giống thật nhất, hãy chọn 'Ánh sáng tự nhiên (Giờ trưa)' hoặc 'Nắng xuyên qua rèm'. Tránh dùng từ 'Cinematic' nếu muốn phong cách UGC.")
+    st.info("💡 **Tips:** Để video bán hàng tốt, hãy kết hợp 'Hành động toàn thân' với 'Tương tác tay' (ví dụ: Vừa đi vừa chỉnh túi xách).")
 
-# --- INPUT COLUMNS ---
-col1, col2 = st.columns([1, 1], gap="medium")
+# --- CỘT 1: INPUT CƠ BẢN (MẪU & ĐỒ) ---
+col1, col2 = st.columns([1, 1], gap="large")
 
 with col1:
-    st.subheader("1. Hình ảnh tham khảo")
+    st.markdown('<div class="sub-header">1. Mẫu & Sản phẩm</div>', unsafe_allow_html=True)
     
-    # Upload ảnh
-    st.markdown('<p class="sub-label">📸 Upload ảnh Mẫu & Sản phẩm</p>', unsafe_allow_html=True)
-    uploaded_img = st.file_uploader("Tải ảnh lên để dễ viết mô tả", type=['png', 'jpg', 'jpeg'])
+    # Upload ảnh (Giữ nguyên từ bản trước vì rất hữu ích)
+    uploaded_img = st.file_uploader("Upload ảnh tham khảo (Optional)", type=['png', 'jpg'])
     if uploaded_img:
-        st.image(uploaded_img, width=200, caption="Ảnh tham khảo")
+        st.image(uploaded_img, width=200)
 
-    # Nhập liệu nội dung
-    st.markdown('<p class="sub-label">👤 Mô tả Người mẫu (Model)</p>', unsafe_allow_html=True)
-    model_desc = st.text_input("Ví dụ: Cô gái việt nam, tóc đen dài, trang điểm nhẹ", 
-                               "Vietnamese young woman, natural skin texture, light makeup, casual daily look")
+    model_desc = st.text_input("Mô tả Mẫu", "Asian female model, street style look, bob hair")
+    outfit_desc = st.text_area("Mô tả Trang phục", "White silk dress, flowy fabric, pearl buttons", height=80)
+    
+    st.markdown('<div class="sub-header">2. Bối cảnh & Ánh sáng</div>', unsafe_allow_html=True)
+    setting = st.selectbox("Địa điểm", [
+        "Đường phố (Street/Urban)", "Studio phông trơn (Minimalist)", 
+        "Quán Cafe (Lifestyle)", "Công viên/Bãi cỏ (Nature)", "Phòng ngủ (Indoor/Cozy)"
+    ])
+    lighting = st.selectbox("Ánh sáng", [
+        "Nắng tự nhiên (Natural Sunlight)", "Nắng giờ vàng (Golden Hour)", 
+        "Ánh sáng cửa sổ (Soft Window Light)", "Đèn Flash (Flash Photography)"
+    ])
 
-    st.markdown('<p class="sub-label">👗 Mô tả Trang phục (Outfit)</p>', unsafe_allow_html=True)
-    outfit_desc = st.text_area("Ví dụ: Áo phông trắng cotton, chất vải dày dặn", 
-                               "White oversized t-shirt, heavy cotton fabric, realistic texture, wrinkles on fabric")
-
+# --- CỘT 2: HÀNH ĐỘNG CHUYÊN SÂU (MỚI) ---
 with col2:
-    st.subheader("2. Ánh sáng & Camera (Quan trọng)")
+    st.markdown('<div class="sub-header">3. Chọn Hành động (Posing)</div>', unsafe_allow_html=True)
     
-    # --- PHẦN CHỈNH ÁNH SÁNG NÂNG CAO ---
-    st.markdown('<p class="sub-label">☀️ Chọn loại Ánh sáng Tự nhiên</p>', unsafe_allow_html=True)
+    # Chia hành động thành 3 Tab để dễ chọn
+    tab_body, tab_interact, tab_detail = st.tabs(["💃 Toàn thân", "🤚 Tương tác/Vải", "👜 Phụ kiện/Giày"])
     
-    # Dictionary map lựa chọn của user sang từ khóa AI chuyên sâu
-    light_options = {
-        "Natural Daylight (Ánh sáng ban ngày tự nhiên, sắc nét)": "natural daylight, bright and airy, crisp lighting, no filter",
-        "Direct Sunlight (Nắng gắt, đổ bóng rõ - Rất thật)": "harsh direct sunlight, high contrast shadows, summer vibe, overexposed highlights",
-        "Golden Hour (Nắng chiều ấm áp, da đẹp)": "golden hour sun, warm tone, sun flare lens effect, soft backlight on hair",
-        "Window Light (Ánh sáng cửa sổ trong nhà - Soft)": "soft natural window light, diffused lighting, indoor daytime, cozy atmosphere",
-        "Overcast / Cloudy (Trời râm, ánh sáng đều)": "overcast sky, soft diffused light, flat lighting, realistic rainy day vibe",
-        "Flash Photography (Đèn Flash buổi tối - Party vibe)": "camera flash lighting, direct flash, dark background, paparazzi style, night out vibe"
+    with tab_body:
+        st.caption("Dùng cho video Lookbook, Outfit check")
+        body_action = st.radio("Chọn dáng chính:", [
+            "Đi thẳng về phía camera (Catwalk)",
+            "Xoay vòng 360 độ (Twirl - Khoe váy xòe)",
+            "Đứng tựa tường/lan can (Pose tĩnh)",
+            "Ngồi cafe/đọc sách (Lifestyle)",
+            "Chạy nhảy vui vẻ (Dynamic/Vui tươi)"
+        ], index=0)
+    
+    with tab_interact:
+        st.caption("Dùng để mô tả chất lượng sản phẩm")
+        hand_action = st.radio("Chọn tương tác tay:", [
+            "Không có (None)",
+            "Tay vuốt dọc thân áo (Khoe phom dáng)",
+            "Cầm vạt váy tung nhẹ (Khoe độ bay)",
+            "Chỉnh cổ áo/Cài cúc (Chi tiết may)",
+            "Đút tay túi quần (Cool ngầu)",
+            "Vuốt tóc/Vén tóc (Tự nhiên)"
+        ], index=0)
+        
+    with tab_detail:
+        st.caption("Dùng cho bán Giày, Túi, Trang sức")
+        acc_action = st.radio("Chọn góc quay phụ kiện:", [
+            "Không có (None)",
+            "Cận cảnh túi xách trên tay",
+            "Góc thấp quay bước chân/Giày (Low angle)",
+            "Zoom vào trang sức (Khuyên tai/Vòng cổ)",
+            "Mở túi/lấy đồ (Unboxing vibe)"
+        ], index=0)
+
+    st.markdown('<div class="sub-header">4. Cảm xúc (Vibe)</div>', unsafe_allow_html=True)
+    vibe = st.select_slider("Thần thái của mẫu", options=["Lạnh lùng/Cool", "Tự tin/Confident", "Vui vẻ/Smiling", "Mơ màng/Dreamy"])
+
+# --- XỬ LÝ LOGIC TẠO PROMPT ---
+st.markdown("---")
+if st.button("🚀 TẠO PROMPT CHI TIẾT"):
+    # 1. Map hành động sang tiếng Anh chuẩn Veo
+    action_map = {
+        "Đi thẳng về phía camera (Catwalk)": "walking confidently towards the camera, runway walk style",
+        "Xoay vòng 360 độ (Twirl - Khoe váy xòe)": "doing a slow 360 degree spin to show the flow of the dress",
+        "Đứng tựa tường/lan can (Pose tĩnh)": "leaning casually against a wall, posing for a photo",
+        "Ngồi cafe/đọc sách (Lifestyle)": "sitting relaxed at a cafe table, drinking coffee",
+        "Chạy nhảy vui vẻ (Dynamic/Vui tươi)": "running playfully, laughing, dynamic movement"
     }
     
-    selected_light_key = st.selectbox("Chọn kiểu ánh sáng:", list(light_options.keys()))
-    selected_light_prompt = light_options[selected_light_key]
+    hand_map = {
+        "Không có (None)": "",
+        "Tay vuốt dọc thân áo (Khoe phom dáng)": "hands running down the fabric to show texture",
+        "Cầm vạt váy tung nhẹ (Khoe độ bay)": "holding the skirt hem and playing with the fabric",
+        "Chỉnh cổ áo/Cài cúc (Chi tiết may)": "adjusting the collar, fixing the buttons",
+        "Đút tay túi quần (Cool ngầu)": "hands in pockets, cool attitude",
+        "Vuốt tóc/Vén tóc (Tự nhiên)": "tucking hair behind ear, fixing hairstyle"
+    }
 
-    # --- PHẦN CAMERA IPHONE ---
-    st.markdown('<p class="sub-label">📱 Góc quay & Chất lượng</p>', unsafe_allow_html=True)
-    camera_style = st.selectbox("Phong cách quay:", 
-                                [
-                                    "Handheld Selfie Mode (Tự cầm máy quay mặt)",
-                                    "POV Shot (Góc nhìn người thứ nhất nhìn xuống đồ)",
-                                    "Shakey Handheld (Cầm tay hơi rung nhẹ - Rất thật)",
-                                    "Stable Gimbal Walk (Đi bộ mượt mà)",
-                                    "Mirror Selfie (Quay qua gương)"
-                                ])
+    acc_map = {
+        "Không có (None)": "",
+        "Cận cảnh túi xách trên tay": "focus on the handbag held in hand",
+        "Góc thấp quay bước chân/Giày (Low angle)": "low angle shot focusing on shoes walking on pavement",
+        "Zoom vào trang sức (Khuyên tai/Vòng cổ)": "extreme close-up on the earrings and necklace",
+        "Mở túi/lấy đồ (Unboxing vibe)": "hands opening the bag, interacting with accessories"
+    }
     
-    st.markdown('<p class="sub-label">📍 Bối cảnh (Background)</p>', unsafe_allow_html=True)
-    setting = st.text_input("Bối cảnh đời thường", "Minimalist bedroom with sunlight, street sidewalk, cafe corner")
+    lighting_map = {
+        "Nắng tự nhiên (Natural Sunlight)": "natural daylight, bright",
+        "Nắng giờ vàng (Golden Hour)": "golden hour warm sunlight, lens flare",
+        "Ánh sáng cửa sổ (Soft Window Light)": "soft window lighting, diffused",
+        "Đèn Flash (Flash Photography)": "direct camera flash, night aesthetic"
+    }
 
-# --- XỬ LÝ PROMPT ---
-st.markdown("---")
-if st.button("✨ TẠO PROMPT UGC (IPHONE STYLE)"):
-    # Xử lý tỷ lệ
+    # 2. Xây dựng chuỗi hành động kết hợp
+    # Logic: Nếu có action phụ kiện -> Ưu tiên mô tả phụ kiện. Nếu không -> Mô tả dáng + tay.
+    combined_action = f"{action_map[body_action]}"
+    if hand_action != "Không có (None)":
+        combined_action += f", while {hand_map[hand_action]}"
+    if acc_action != "Không có (None)":
+        combined_action += f", camera emphasizes {acc_map[acc_action]}"
+
+    # 3. Tạo Prompt
     ar = "--ar 9:16" if "9:16" in video_ratio else "--ar 16:9"
     if "1:1" in video_ratio: ar = "--ar 1:1"
-    
-    # Các từ khóa "Magic" để biến video thành style iPhone/UGC
-    ugc_keywords = "shot on iPhone 15 Pro, 4k raw footage, social media quality, vlog aesthetic, realistic texture, highly detailed skin, authentic look, non-cinematic, amateur videography style."
-    
-    # Lắp ghép Prompt
+
     final_prompt = (
-        f"**Prompt cho Veo:**\n\n"
-        f"Real life footage, {ugc_keywords} \n"
+        f"**Veo Prompt:**\n\n"
+        f"Realistic UGC fashion video, shot on iPhone. "
         f"**Subject:** {model_desc} wearing {outfit_desc}. \n"
-        f"**Lighting:** {selected_light_prompt}. \n"
-        f"**Setting:** {setting}. \n"
-        f"**Camera Action:** {camera_style}. \n"
-        f"**Details:** Cloth physics, real life textures. {ar}"
+        f"**Action:** {combined_action}. \n"
+        f"**Vibe:** {vibe} expression. \n"
+        f"**Environment:** {setting}, {lighting_map[lighting]}. \n"
+        f"**Details:** Real life texture, cloth physics, authentic look, 4k footage. {ar}"
     )
-    
-    st.success("Đã tạo prompt phong cách chân thực!")
+
+    st.success("Đã tạo prompt với hành động chi tiết!")
     st.code(final_prompt, language="markdown")
-    
-    st.info("💡 **Giải thích:** App đã tự động thêm các từ khóa như 'Raw footage', 'Shot on iPhone', 'Non-cinematic' để loại bỏ cảm giác giả tạo của AI, giúp ánh sáng trông đời thường nhất.")
+    st.caption("Copy và dán vào Veo. Lưu ý: Các hành động như 'Sờ vải' hay 'Xoay' sẽ giúp AI tạo ra chuyển động vật lý rất đẹp.")
