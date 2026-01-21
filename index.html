@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nha Khoa An Hạnh - An Hanh Dental Clinic</title>
+    <!-- Font Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome cho Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            brown: '#5B210B',  // Màu chủ đạo (từ PDF)
+                            beige: '#B29671',  // Màu nền/nhấn (từ PDF)
+                            red: '#701E20',    // Màu điểm nhấn (từ PDF)
+                            light: '#FAF7F2',  // Màu nền sáng tùy chỉnh cho hợp với beige
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Tùy chỉnh thanh cuộn */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF7F2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #B29671;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5B210B;
+        }
+        
+        /* Animation nhẹ cho Hero */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-700 bg-brand-light antialiased">
+
+    <!-- HEADER -->
+    <header class="bg-white/95 backdrop-blur-sm shadow-sm fixed w-full z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <!-- Logo Area -->
+            <a href="#" class="flex items-center gap-2 group">
+                <!-- Icon răng giả lập logo -->
+                <div class="w-10 h-10 bg-brand-brown rounded-full flex items-center justify-center text-brand-beige group-hover:bg-brand-beige group-hover:text-brand-brown transition-colors duration-300">
+                    <i class="fa-solid fa-tooth text-xl"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold text-brand-brown leading-none tracking-wide">AN HẠNH</span>
+                    <span class="text-xs font-semibold text-brand-beige tracking-[0.2em] uppercase">Dental Clinic</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center space-x-8 font-medium text-brand-brown/90">
+                <a href="#home" class="hover:text-brand-beige transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-brand-beige after:transition-all hover:after:w-full">Trang chủ</a>
+                <a href="#about" class="hover:text-brand-beige transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-brand-beige after:transition-all hover:after:w-full">Về chúng tôi</a>
+                <a href="#services" class="hover:text-brand-beige transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-brand-beige after:transition-all hover:after:w-full">Dịch vụ</a>
+                <a href="#contact" class="hover:text-brand-beige transition-colors relative after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-0.5 after:bg-brand-beige after:transition-all hover:after:w-full">Liên hệ</a>
+            </nav>
+
+            <!-- CTA Button -->
+            <div class="hidden md:block">
+                <a href="tel:155456769" class="bg-brand-brown hover:bg-brand-beige text-white px-6 py-2.5 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-brand-beige/50 flex items-center gap-2 transform hover:-translate-y-0.5">
+                    <i class="fa-solid fa-phone"></i> 155-456-769
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-2xl text-brand-brown hover:text-brand-beige" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
+            <div class="flex flex-col p-4 space-y-4 font-medium text-brand-brown">
+                <a href="#home" class="hover:text-brand-beige">Trang chủ</a>
+                <a href="#about" class="hover:text-brand-beige">Về chúng tôi</a>
+                <a href="#services" class="hover:text-brand-beige">Dịch vụ</a>
+                <a href="#contact" class="hover:text-brand-beige">Liên hệ</a>
+                <a href="tel:155456769" class="bg-brand-brown text-white text-center py-2 rounded-lg">Gọi ngay</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section id="home" class="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden">
+        <!-- Background decorative blob -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-brand-beige/20 rounded-full blur-3xl z-0"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-72 h-72 bg-brand-brown/10 rounded-full blur-3xl z-0"></div>
+
+        <div class="container mx-auto px-4 sm:px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <!-- Content -->
+                <div class="w-full lg:w-1/2 text-center lg:text-left animate-fade-in">
+                    <span class="inline-block px-4 py-1.5 bg-brand-beige/10 text-brand-brown text-sm font-bold rounded-full mb-6 border border-brand-beige/20">
+                        ✨ Nụ cười tỏa sáng, tương lai rạng ngời
+                    </span>
+                    <h1 class="text-4xl lg:text-6xl font-bold text-brand-brown leading-tight mb-6">
+                        Kiến tạo nụ cười <br>
+                        <span class="text-brand-beige relative">
+                            Hạnh Phúc
+                            <svg class="absolute w-full h-3 -bottom-1 left-0 text-brand-beige opacity-40" viewBox="0 0 200 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.00025 6.99997C25.7509 2.99997 83.2503 2.99997 197.5 5.99997" stroke="currentColor" stroke-width="3"></path></svg>
+                        </span>
+                        của bạn
+                    </h1>
+                    <p class="text-gray-600 text-lg mb-8 leading-relaxed max-w-xl mx-auto lg:mx-0">
+                        Chào mừng đến với Nha Khoa An Hạnh. Chúng tôi cam kết mang lại trải nghiệm chăm sóc răng miệng êm ái, an toàn và hiệu quả nhất với công nghệ hiện đại.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="#contact" class="bg-brand-brown text-white px-8 py-4 rounded-lg font-semibold shadow-xl hover:bg-brand-beige transition-all duration-300 flex items-center justify-center gap-2 group">
+                            Đặt lịch khám
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="#services" class="border-2 border-brand-brown text-brand-brown px-8 py-4 rounded-lg font-semibold hover:bg-brand-brown hover:text-white transition-all duration-300 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-list-check"></i> Xem dịch vụ
+                        </a>
+                    </div>
+                    
+                    <!-- Trust indicators -->
+                    <div class="mt-12 flex items-center justify-center lg:justify-start gap-8 text-gray-500">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-user-doctor text-brand-beige text-2xl"></i>
+                            <div class="text-sm"><strong class="block text-brand-brown text-lg">10+</strong>Năm kinh nghiệm</div>
+                        </div>
+                        <div class="w-px h-10 bg-gray-300"></div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-regular fa-face-smile text-brand-beige text-2xl"></i>
+                            <div class="text-sm"><strong class="block text-brand-brown text-lg">5.000+</strong>Khách hàng hài lòng</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image -->
+                <div class="w-full lg:w-1/2 relative">
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
+                        <!-- Ảnh placeholder chất lượng cao từ Unsplash -->
+                        <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Nha khoa hiện đại" class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700">
+                        
+                        <!-- Floating Card -->
+                        <div class="absolute bottom-6 left-6 bg-white/95 backdrop-blur p-4 rounded-xl shadow-lg max-w-xs border-l-4 border-brand-beige hidden sm:block">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-green-100 p-2 rounded-full text-green-600">
+                                    <i class="fa-solid fa-shield-heart"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-brand-brown">Bảo hành trọn đời</p>
+                                    <p class="text-xs text-gray-500">Cho dịch vụ Implant</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Decorative Dots -->
+                    <div class="absolute -top-6 -right-6 text-brand-beige opacity-50 z-[-1]">
+                        <svg width="100" height="100" fill="currentColor" viewBox="0 0 100 100">
+                            <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                                <circle cx="2" cy="2" r="2"></circle>
+                            </pattern>
+                            <rect width="100" height="100" fill="url(#dots)"></rect>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="w-full md:w-1/2">
+                    <img src="https://images.unsplash.com/photo-1588776814546-1b447543250e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Đội ngũ bác sĩ" class="rounded-lg shadow-xl mb-6">
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="https://images.unsplash.com/photo-1598256989626-60ed088b4569?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Thiết bị" class="rounded-lg shadow-md h-40 w-full object-cover">
+                        <div class="bg-brand-brown rounded-lg flex flex-col items-center justify-center text-white p-4 text-center">
+                            <span class="text-4xl font-bold mb-2">100%</span>
+                            <span class="text-sm opacity-90">Thiết bị nhập khẩu Châu Âu</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2">
+                    <h4 class="text-brand-beige font-bold uppercase tracking-wider mb-2">Về chúng tôi</h4>
+                    <h2 class="text-3xl md:text-4xl font-bold text-brand-brown mb-6">Tại sao chọn Nha Khoa An Hạnh?</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Tên gọi <strong>"An Hạnh"</strong> xuất phát từ mong muốn mang lại sự <strong>An Tâm</strong> tuyệt đối và niềm <strong>Hạnh Phúc</strong> trọn vẹn cho mỗi khách hàng khi tìm lại nụ cười của mình.
+                    </p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check-circle text-brand-beige mt-1 mr-3"></i>
+                            <span class="text-gray-700">Đội ngũ bác sĩ chuyên khoa Răng Hàm Mặt giàu kinh nghiệm.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check-circle text-brand-beige mt-1 mr-3"></i>
+                            <span class="text-gray-700">Quy trình vô trùng chuẩn Bộ Y Tế, an toàn tuyệt đối.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check-circle text-brand-beige mt-1 mr-3"></i>
+                            <span class="text-gray-700">Chi phí minh bạch, tư vấn phác đồ điều trị rõ ràng.</span>
+                        </li>
+                    </ul>
+                    <a href="#contact" class="text-brand-brown font-bold border-b-2 border-brand-beige pb-1 hover:text-brand-beige transition-colors inline-flex items-center gap-2">
+                        Tìm hiểu thêm <i class="fa-solid fa-arrow-right text-sm"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="py-20 bg-brand-light">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h4 class="text-brand-beige font-bold uppercase tracking-wider mb-2">Dịch vụ chuyên sâu</h4>
+                <h2 class="text-3xl md:text-4xl font-bold text-brand-brown mb-4">Giải pháp cho nụ cười hoàn hảo</h2>
+                <div class="w-24 h-1 bg-brand-beige mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-2xl transition-all duration-300 group hover:-translate-y-2 border-b-4 border-transparent hover:border-brand-beige">
+                    <div class="w-16 h-16 bg-brand-light rounded-full flex items-center justify-center text-brand-brown text-2xl mb-6 group-hover:bg-brand-brown group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-teeth"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-brown mb-3">Bọc Răng Sứ Thẩm Mỹ</h3>
+                    <p class="text-gray-500 mb-4 line-clamp-3">Công nghệ phủ sứ Nano hiện đại, bảo tồn răng thật tối đa, mang lại hàm răng trắng sáng tự nhiên.</p>
+                    <a href="#" class="text-brand-beige font-semibold text-sm group-hover:text-brand-brown transition-colors">Xem chi tiết &rarr;</a>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-2xl transition-all duration-300 group hover:-translate-y-2 border-b-4 border-transparent hover:border-brand-beige">
+                    <div class="w-16 h-16 bg-brand-light rounded-full flex items-center justify-center text-brand-brown text-2xl mb-6 group-hover:bg-brand-brown group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-brown mb-3">Cấy Ghép Implant</h3>
+                    <p class="text-gray-500 mb-4 line-clamp-3">Giải pháp phục hồi răng mất tối ưu nhất. Trụ Implant nhập khẩu chính hãng Thụy Sĩ, Mỹ, Hàn Quốc.</p>
+                    <a href="#" class="text-brand-beige font-semibold text-sm group-hover:text-brand-brown transition-colors">Xem chi tiết &rarr;</a>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-2xl transition-all duration-300 group hover:-translate-y-2 border-b-4 border-transparent hover:border-brand-beige">
+                    <div class="w-16 h-16 bg-brand-light rounded-full flex items-center justify-center text-brand-brown text-2xl mb-6 group-hover:bg-brand-brown group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-tooth"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-brown mb-3">Niềng Răng - Chỉnh Nha</h3>
+                    <p class="text-gray-500 mb-4 line-clamp-3">Chỉnh nha mắc cài và khay trong suốt Invisalign giúp khắc phục hô, móm, lệch lạc hiệu quả.</p>
+                    <a href="#" class="text-brand-beige font-semibold text-sm group-hover:text-brand-brown transition-colors">Xem chi tiết &rarr;</a>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-2xl transition-all duration-300 group hover:-translate-y-2 border-b-4 border-transparent hover:border-brand-beige">
+                    <div class="w-16 h-16 bg-brand-light rounded-full flex items-center justify-center text-brand-brown text-2xl mb-6 group-hover:bg-brand-brown group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-brown mb-3">Tẩy Trắng Răng</h3>
+                    <p class="text-gray-500 mb-4 line-clamp-3">Công nghệ Laser Whitening bật tông trắng sáng chỉ sau 60 phút, không ê buốt.</p>
+                    <a href="#" class="text-brand-beige font-semibold text-sm group-hover:text-brand-brown transition-colors">Xem chi tiết &rarr;</a>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-2xl transition-all duration-300 group hover:-translate-y-2 border-b-4 border-transparent hover:border-brand-beige">
+                    <div class="w-16 h-16 bg-brand-light rounded-full flex items-center justify-center text-brand-brown text-2xl mb-6 group-hover:bg-brand-brown group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-child-reaching"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-brown mb-3">Nha Khoa Trẻ Em</h3>
+                    <p class="text-gray-500 mb-4 line-clamp-3">Chăm sóc răng sữa, nhổ răng không đau và theo dõi quá trình mọc răng vĩnh viễn cho bé.</p>
+                    <a href="#" class="text-brand-beige font-semibold text-sm group-hover:text-brand-brown transition-colors">Xem chi tiết &rarr;</a>
+                </div>
+
+                 <!-- Service 6 -->
+                 <div class="bg-white p-8 rounded-xl shadow-sm hover:shadow-2xl transition-all duration-300 group hover:-translate-y-2 border-b-4 border-transparent hover:border-brand-beige">
+                    <div class="w-16 h-16 bg-brand-light rounded-full flex items-center justify-center text-brand-brown text-2xl mb-6 group-hover:bg-brand-brown group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-kit-medical"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-brand-brown mb-3">Điều Trị Tổng Quát</h3>
+                    <p class="text-gray-500 mb-4 line-clamp-3">Trám răng, điều trị tủy, cạo vôi răng định kỳ giúp ngăn ngừa bệnh lý răng miệng.</p>
+                    <a href="#" class="text-brand-beige font-semibold text-sm group-hover:text-brand-brown transition-colors">Xem chi tiết &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROMOTION / CTA -->
+    <section class="py-16 bg-brand-brown relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-brand-red/20 rounded-full blur-3xl"></div>
+
+        <div class="container mx-auto px-4 sm:px-6 relative z-10 text-center">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">Đừng để cơn đau răng làm phiền bạn</h2>
+            <p class="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">Đặt lịch khám ngay hôm nay để nhận ưu đãi <span class="text-brand-beige font-bold">miễn phí</span> chụp X-Quang và tư vấn.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="tel:155456769" class="bg-brand-beige text-brand-brown px-8 py-4 rounded-full font-bold shadow-lg hover:bg-white hover:scale-105 transition-all duration-300">
+                    <i class="fa-solid fa-phone mr-2"></i> Gọi 155-456-769
+                </a>
+                <a href="#contact" class="bg-transparent border-2 border-brand-beige text-brand-beige px-8 py-4 rounded-full font-bold hover:bg-brand-beige hover:text-brand-brown transition-all duration-300">
+                    Gửi tin nhắn
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT & FOOTER -->
+    <footer id="contact" class="bg-[#2a0f05] text-white pt-20 pb-10">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <!-- Brand Info -->
+                <div class="space-y-6">
+                    <div class="flex items-center gap-2">
+                        <div class="w-10 h-10 bg-brand-beige rounded-full flex items-center justify-center text-brand-brown">
+                            <i class="fa-solid fa-tooth text-xl"></i>
+                        </div>
+                        <span class="text-2xl font-bold tracking-wide">AN HẠNH</span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Hệ thống nha khoa chuẩn quốc tế, mang đến nụ cười hoàn hảo và sự tự tin cho hàng nghìn khách hàng mỗi năm.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-beige hover:text-brand-brown transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-beige hover:text-brand-brown transition-colors"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#" class="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center hover:bg-brand-beige hover:text-brand-brown transition-colors"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-brand-beige">Liên kết nhanh</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#home" class="hover:text-white hover:translate-x-1 inline-block transition-transform">Trang chủ</a></li>
+                        <li><a href="#about" class="hover:text-white hover:translate-x-1 inline-block transition-transform">Về chúng tôi</a></li>
+                        <li><a href="#services" class="hover:text-white hover:translate-x-1 inline-block transition-transform">Dịch vụ</a></li>
+                        <li><a href="#" class="hover:text-white hover:translate-x-1 inline-block transition-transform">Bảng giá</a></li>
+                        <li><a href="#" class="hover:text-white hover:translate-x-1 inline-block transition-transform">Tin tức</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services List -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-brand-beige">Dịch vụ chính</h4>
+                    <ul class="space-y-3 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Bọc răng sứ</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Trồng răng Implant</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Niềng răng thẩm mỹ</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Tẩy trắng răng</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Nhổ răng khôn</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-brand-beige">Thông tin liên hệ</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-brand-beige"></i>
+                            <span>123 Đường Nguyễn Văn Cừ, Quận 1, TP.HCM (Địa chỉ mẫu)</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-brand-beige"></i>
+                            <a href="tel:155456769" class="hover:text-white">155-456-769</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-envelope text-brand-beige"></i>
+                            <a href="mailto:anhanhdental@gmail.com" class="hover:text-white">anhanhdental@gmail.com</a>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-globe text-brand-beige"></i>
+                            <a href="#" class="hover:text-white">www.anhanhdental.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2026 An Hạnh Dental Clinic. All Rights Reserved. Designed by Duy.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
